@@ -2,10 +2,11 @@
   const body = document.body;
   const chainPath = document.getElementById("chainPath");
   const chainBall = document.getElementById("chainBall");
+  const chainCore = document.querySelector(".chain-ball-core");
 
   const START_Y = 80;
-  const MAX_PULL = 120;
-  const THRESHOLD = 75;
+  const MAX_PULL = 140;
+  const THRESHOLD = 80;
 
   let dragging = false;
   let startY = 0;
@@ -13,9 +14,12 @@
 
   const set = (y) => {
     const cy = Math.max(START_Y, Math.min(START_Y + MAX_PULL, y));
-    const sag = Math.max(0, (cy - START_Y) * 0.32);
-    chainPath.setAttribute("d", `M 10 0 C 10 ${START_Y - sag}, 10 ${cy - sag}, 10 ${cy}`);
+    const pull = cy - START_Y;
+    const sag = pull * 0.38;
+    const bend = pull * 0.12;
+    chainPath.setAttribute("d", `M 10 0 C 8 ${bend}, 12 ${START_Y + bend}, 10 ${START_Y} C 8 ${START_Y - sag * 0.4}, 12 ${cy - sag * 0.8}, 10 ${cy}`);
     chainBall.setAttribute("cy", cy);
+    if (chainCore) chainCore.setAttribute("cy", cy);
   };
 
   chainBall.addEventListener("pointerdown", (e) => {
@@ -24,6 +28,7 @@
     startCy = parseFloat(chainBall.getAttribute("cy") || START_Y);
     chainPath.style.transition = "none";
     chainBall.style.transition = "none";
+    if (chainCore) chainCore.style.transition = "none";
     chainBall.setPointerCapture(e.pointerId);
     e.preventDefault();
     e.stopPropagation();
@@ -46,13 +51,15 @@
     if (cy - START_Y >= THRESHOLD) {
       body.classList.toggle("light");
     }
-    chainPath.style.transition = "d 340ms cubic-bezier(0.22, 1, 0.36, 1)";
-    chainBall.style.transition = "cy 340ms cubic-bezier(0.22, 1, 0.36, 1)";
+    chainPath.style.transition = "d 380ms cubic-bezier(0.22, 1, 0.36, 1)";
+    chainBall.style.transition = "cy 380ms cubic-bezier(0.22, 1, 0.36, 1)";
+    if (chainCore) chainCore.style.transition = "cy 380ms cubic-bezier(0.22, 1, 0.36, 1)";
     set(START_Y);
     setTimeout(() => {
       chainPath.style.transition = "";
       chainBall.style.transition = "";
-    }, 360);
+      if (chainCore) chainCore.style.transition = "";
+    }, 400);
     e.preventDefault();
   });
 
@@ -62,13 +69,15 @@
     if (e.pointerId !== undefined && chainBall.hasPointerCapture && chainBall.hasPointerCapture(e.pointerId)) {
       chainBall.releasePointerCapture(e.pointerId);
     }
-    chainPath.style.transition = "d 340ms cubic-bezier(0.22, 1, 0.36, 1)";
-    chainBall.style.transition = "cy 340ms cubic-bezier(0.22, 1, 0.36, 1)";
+    chainPath.style.transition = "d 380ms cubic-bezier(0.22, 1, 0.36, 1)";
+    chainBall.style.transition = "cy 380ms cubic-bezier(0.22, 1, 0.36, 1)";
+    if (chainCore) chainCore.style.transition = "cy 380ms cubic-bezier(0.22, 1, 0.36, 1)";
     set(START_Y);
     setTimeout(() => {
       chainPath.style.transition = "";
       chainBall.style.transition = "";
-    }, 360);
+      if (chainCore) chainCore.style.transition = "";
+    }, 400);
     e.preventDefault();
   });
 

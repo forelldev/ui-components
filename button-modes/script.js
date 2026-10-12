@@ -1,40 +1,30 @@
 (() => {
   const body = document.body;
-  const ball = document.getElementById("chainBall");
-  const link = document.getElementById("chainLink");
+  const chainPath = document.getElementById("chainPath");
+  const chainBall = document.getElementById("chainBall");
 
-  const START_TOP = 80;
-  const MAX_PULL = 100;
-  const THRESHOLD = 65;
+  const START_Y = 80;
+  const MAX_PULL = 120;
+  const THRESHOLD = 75;
 
   let dragging = false;
   let startY = 0;
-  let startTop = START_TOP;
+  let startCy = START_Y;
 
-  const apply = (top) => {
-    const t = Math.max(START_TOP, Math.min(START_TOP + MAX_PULL, top));
-    link.style.height = t + "px";
-    ball.style.top = t + "px";
+  const set = (y) => {
+    const cy = Math.max(START_Y, Math.min(START_Y + MAX_PULL, y));
+    const sag = Math.max(0, (cy - START_Y) * 0.32);
+    chainPath.setAttribute("d", `M 10 0 C 10 ${START_Y - sag}, 10 ${cy - sag}, 10 ${cy}`);
+    chainBall.setAttribute("cy", cy);
   };
 
-  const reset = () => {
-    link.style.transition = "height 250ms cubic-bezier(0.25, 1, 0.5, 1)";
-    ball.style.transition = "top 250ms cubic-bezier(0.25, 1, 0.5, 1)";
-    link.style.height = START_TOP + "px";
-    ball.style.top = START_TOP + "px";
-    setTimeout(() => {
-      link.style.transition = "";
-      ball.style.transition = "";
-    }, 270);
-  };
-
-  ball.addEventListener("pointerdown", (e) => {
+  chainBall.addEventListener("pointerdown", (e) => {
     dragging = true;
     startY = e.clientY;
-    startTop = ball.offsetTop || START_TOP;
-    link.style.transition = "none";
-    ball.style.transition = "none";
-    ball.setPointerCapture(e.pointerId);
+    startCy = parseFloat(chainBall.getAttribute("cy") || START_Y);
+    chainPath.style.transition = "none";
+    chainBall.style.transition = "none";
+    chainBall.setPointerCapture(e.pointerId);
     e.preventDefault();
     e.stopPropagation();
   });
@@ -42,34 +32,45 @@
   window.addEventListener("pointermove", (e) => {
     if (!dragging) return;
     const dy = e.clientY - startY;
-    apply(startTop + dy);
+    set(startCy + dy);
     e.preventDefault();
   });
 
   window.addEventListener("pointerup", (e) => {
     if (!dragging) return;
     dragging = false;
-    if (e.pointerId !== undefined && ball.hasPointerCapture && ball.hasPointerCapture(e.pointerId)) {
-      ball.releasePointerCapture(e.pointerId);
+    if (e.pointerId !== undefined && chainBall.hasPointerCapture && chainBall.hasPointerCapture(e.pointerId)) {
+      chainBall.releasePointerCapture(e.pointerId);
     }
-    const pulled = (ball.offsetTop || START_TOP) - START_TOP;
-    if (pulled >= THRESHOLD) {
+    const cy = parseFloat(chainBall.getAttribute("cy") || START_Y);
+    if (cy - START_Y >= THRESHOLD) {
       body.classList.toggle("light");
     }
-    reset();
+    chainPath.style.transition = "d 340ms cubic-bezier(0.22, 1, 0.36, 1)";
+    chainBall.style.transition = "cy 340ms cubic-bezier(0.22, 1, 0.36, 1)";
+    set(START_Y);
+    setTimeout(() => {
+      chainPath.style.transition = "";
+      chainBall.style.transition = "";
+    }, 360);
     e.preventDefault();
   });
 
   window.addEventListener("pointercancel", (e) => {
     if (!dragging) return;
     dragging = false;
-    if (e.pointerId !== undefined && ball.hasPointerCapture && ball.hasPointerCapture(e.pointerId)) {
-      ball.releasePointerCapture(e.pointerId);
+    if (e.pointerId !== undefined && chainBall.hasPointerCapture && chainBall.hasPointerCapture(e.pointerId)) {
+      chainBall.releasePointerCapture(e.pointerId);
     }
-    reset();
+    chainPath.style.transition = "d 340ms cubic-bezier(0.22, 1, 0.36, 1)";
+    chainBall.style.transition = "cy 340ms cubic-bezier(0.22, 1, 0.36, 1)";
+    set(START_Y);
+    setTimeout(() => {
+      chainPath.style.transition = "";
+      chainBall.style.transition = "";
+    }, 360);
     e.preventDefault();
   });
 
-  link.style.height = START_TOP + "px";
-  ball.style.top = START_TOP + "px";
+  set(START_Y);
 })();

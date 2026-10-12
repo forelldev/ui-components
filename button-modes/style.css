@@ -52,7 +52,7 @@ body {
 .pull-switch {
   position: relative;
   width: 80px;
-  height: 300px;
+  height: 320px;
 }
 
 .chain {
@@ -60,48 +60,44 @@ body {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 18px;
-  height: 160px;
+  width: 20px;
+  height: 200px;
   z-index: 1;
+  overflow: visible;
 }
 
-.chain-link {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-  width: 3px;
-  height: 80px;
-  background: var(--chain);
-  border-radius: 2px;
-  will-change: height;
-  transition: background 400ms ease;
+.chain-path {
+  fill: none;
+  stroke: var(--chain);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  transition: stroke 400ms ease;
+  will-change: d;
 }
 
 .chain-ball {
-  position: absolute;
-  left: 50%;
-  top: 80px;
-  transform: translateX(-50%);
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--ball);
-  border: 1.5px solid var(--ball-border);
+  fill: var(--ball);
+  stroke: var(--ball-border);
+  stroke-width: 1.5;
   cursor: grab;
-  will-change: top;
-  transition: background 400ms ease, border-color 400ms ease;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  will-change: cy;
+  transition: fill 400ms ease, stroke 400ms ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
 }
 
 .chain-ball:active {
   cursor: grabbing;
-  transform: translateX(-50%) scale(0.9);
+}
+
+.chain-ball-core {
+  fill: radial-gradient(circle at 35% 25%, #fff 0%, rgba(255, 255, 255, 0.5) 100%);
+  pointer-events: none;
 }
 
 .bulb-holder {
   position: absolute;
-  bottom: 10px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   display: flex;

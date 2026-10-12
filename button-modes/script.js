@@ -3,9 +3,9 @@
   const cordStrand = document.getElementById("cordStrand");
   const cordKnot = document.getElementById("cordKnot");
 
-  const START_TOP = 70;
-  const MAX_PULL = 90;
-  const THRESHOLD = 55;
+  const START_TOP = 80;
+  const MAX_PULL = 100;
+  const THRESHOLD = 60;
 
   let dragging = false;
   let startY = 0;
@@ -18,14 +18,14 @@
   };
 
   const reset = () => {
-    cordStrand.style.transition = "height 260ms cubic-bezier(0.25, 1, 0.5, 1)";
-    cordKnot.style.transition = "top 260ms cubic-bezier(0.25, 1, 0.5, 1)";
+    cordStrand.style.transition = "height 280ms cubic-bezier(0.25, 1, 0.5, 1)";
+    cordKnot.style.transition = "top 280ms cubic-bezier(0.25, 1, 0.5, 1)";
     cordStrand.style.height = START_TOP + "px";
     cordKnot.style.top = START_TOP + "px";
     setTimeout(() => {
       cordStrand.style.transition = "";
       cordKnot.style.transition = "";
-    }, 280);
+    }, 300);
   };
 
   cordKnot.addEventListener("pointerdown", (e) => {

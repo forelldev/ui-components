@@ -1,8 +1,8 @@
-# ⚽ Gol File Upload Component
+# ⚽ Gol Upload
 
 Un componente de carga de archivos (*file upload*) con animación de tiro a puerta al arrastrar y soltar (*drag & drop*).
 
-![Gol File Upload Component](./demo.gif)
+![Gol Upload](./demo.gif)
 
 ## ⚡ Tecnologías
 * **HTML5 & CSS3** (Animaciones nativas con Keyframes)
@@ -14,4 +14,11 @@ Simplemente clona este repositorio y abre el archivo `index.html` en tu navegado
 
 ```bash
 # Abrir directamente en Linux / macOS / Windows
-open index.html
+open gol-upload/index.html
+```
+
+O desde la carpeta:
+
+```bash
+cd gol-upload && open index.html
+```

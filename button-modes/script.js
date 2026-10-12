@@ -5,8 +5,8 @@
   const chainCore = document.querySelector(".chain-ball-core");
 
   const START_Y = 80;
-  const MAX_PULL = 140;
-  const THRESHOLD = 80;
+  const MAX_PULL = 130;
+  const THRESHOLD = 70;
 
   let dragging = false;
   let startY = 0;
@@ -15,9 +15,9 @@
   const set = (y) => {
     const cy = Math.max(START_Y, Math.min(START_Y + MAX_PULL, y));
     const pull = cy - START_Y;
-    const sag = pull * 0.38;
-    const bend = pull * 0.12;
-    chainPath.setAttribute("d", `M 10 0 C 8 ${bend}, 12 ${START_Y + bend}, 10 ${START_Y} C 8 ${START_Y - sag * 0.4}, 12 ${cy - sag * 0.8}, 10 ${cy}`);
+    const sway = pull * 0.18;
+    const dip = pull * 0.22;
+    chainPath.setAttribute("d", `M 10 0 L 10 ${START_Y - sway} Q 10 ${START_Y} 10 ${START_Y + dip} L 10 ${cy}`);
     chainBall.setAttribute("cy", cy);
     if (chainCore) chainCore.setAttribute("cy", cy);
   };
@@ -51,15 +51,15 @@
     if (cy - START_Y >= THRESHOLD) {
       body.classList.toggle("light");
     }
-    chainPath.style.transition = "d 380ms cubic-bezier(0.22, 1, 0.36, 1)";
-    chainBall.style.transition = "cy 380ms cubic-bezier(0.22, 1, 0.36, 1)";
-    if (chainCore) chainCore.style.transition = "cy 380ms cubic-bezier(0.22, 1, 0.36, 1)";
+    chainPath.style.transition = "d 320ms cubic-bezier(0.22, 1, 0.36, 1)";
+    chainBall.style.transition = "cy 320ms cubic-bezier(0.22, 1, 0.36, 1)";
+    if (chainCore) chainCore.style.transition = "cy 320ms cubic-bezier(0.22, 1, 0.36, 1)";
     set(START_Y);
     setTimeout(() => {
       chainPath.style.transition = "";
       chainBall.style.transition = "";
       if (chainCore) chainCore.style.transition = "";
-    }, 400);
+    }, 340);
     e.preventDefault();
   });
 
@@ -69,15 +69,15 @@
     if (e.pointerId !== undefined && chainBall.hasPointerCapture && chainBall.hasPointerCapture(e.pointerId)) {
       chainBall.releasePointerCapture(e.pointerId);
     }
-    chainPath.style.transition = "d 380ms cubic-bezier(0.22, 1, 0.36, 1)";
-    chainBall.style.transition = "cy 380ms cubic-bezier(0.22, 1, 0.36, 1)";
-    if (chainCore) chainCore.style.transition = "cy 380ms cubic-bezier(0.22, 1, 0.36, 1)";
+    chainPath.style.transition = "d 320ms cubic-bezier(0.22, 1, 0.36, 1)";
+    chainBall.style.transition = "cy 320ms cubic-bezier(0.22, 1, 0.36, 1)";
+    if (chainCore) chainCore.style.transition = "cy 320ms cubic-bezier(0.22, 1, 0.36, 1)";
     set(START_Y);
     setTimeout(() => {
       chainPath.style.transition = "";
       chainBall.style.transition = "";
       if (chainCore) chainCore.style.transition = "";
-    }, 400);
+    }, 340);
     e.preventDefault();
   });
 

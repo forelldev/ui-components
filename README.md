@@ -2,9 +2,7 @@
 
 Un componente de carga de archivos (*file upload*) con animación de tiro a puerta al arrastrar y soltar (*drag & drop*).
 
-<p align="center">
-  <video src="https://github.com/user-attachments/assets/5f0c278d-ab62-4d66-a0c3-ec4a75217d4a" autoplay loop muted playsinline width="100%"></video>
-</p>
+<img width="800" height="1422" alt="video1" src="https://github.com/user-attachments/assets/91426eaa-0aaf-4e47-8a06-5cbce734cbd6" />
 
 
 ## ⚡ Tecnologías

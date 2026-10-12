@@ -52,7 +52,7 @@ body {
 .pull-switch {
   position: relative;
   width: 80px;
-  height: 320px;
+  height: 340px;
 }
 
 .chain {
@@ -61,7 +61,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 20px;
-  height: 200px;
+  height: 220px;
   z-index: 1;
   overflow: visible;
 }
@@ -69,7 +69,7 @@ body {
 .chain-path {
   fill: none;
   stroke: var(--chain);
-  stroke-width: 2.5;
+  stroke-width: 2.8;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
   transition: stroke 400ms ease;
@@ -79,11 +79,11 @@ body {
 .chain-ball {
   fill: var(--ball);
   stroke: var(--ball-border);
-  stroke-width: 1.5;
+  stroke-width: 1.6;
   cursor: grab;
   will-change: cy;
   transition: fill 400ms ease, stroke 400ms ease;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
 }
 
 .chain-ball:active {
@@ -91,8 +91,9 @@ body {
 }
 
 .chain-ball-core {
-  fill: radial-gradient(circle at 35% 25%, #fff 0%, rgba(255, 255, 255, 0.5) 100%);
+  fill: radial-gradient(circle at 35% 25%, #fff 0%, rgba(255, 255, 255, 0.6) 100%);
   pointer-events: none;
+  will-change: cy;
 }
 
 .bulb-holder {
@@ -107,16 +108,16 @@ body {
 }
 
 .cap {
-  width: 24px;
-  height: 5px;
+  width: 26px;
+  height: 6px;
   border-radius: 3px 3px 2px 2px;
   background: var(--cap);
   margin-bottom: -1px;
 }
 
 .bulb {
-  width: 72px;
-  height: 72px;
+  width: 74px;
+  height: 74px;
   position: relative;
   display: flex;
   align-items: center;
@@ -125,27 +126,27 @@ body {
 
 .glass {
   position: absolute;
-  width: 64px;
-  height: 64px;
+  width: 66px;
+  height: 66px;
   border-radius: 50%;
   background: var(--glass);
   border: 1px solid rgba(148, 163, 184, 0.25);
   transition: all 650ms ease;
-  box-shadow: inset 0 -6px 14px -8px rgba(0, 0, 0, 0.9);
+  box-shadow: inset 0 -8px 16px -10px rgba(0, 0, 0, 0.9);
 }
 
 body.light .glass {
   border: 1px solid rgba(250, 204, 21, 0.85);
-  box-shadow: 0 0 32px -8px rgba(250, 204, 21, 0.44);
+  box-shadow: 0 0 36px -8px rgba(250, 204, 21, 0.45);
 }
 
 .filament {
   position: absolute;
-  width: 24px;
-  height: 12px;
+  width: 26px;
+  height: 14px;
   top: 48%;
   border-radius: 50%;
-  background: radial-gradient(circle, transparent 40%, rgba(148, 163, 184, 0.36) 41%, transparent 56%);
+  background: radial-gradient(circle, transparent 40%, rgba(148, 163, 184, 0.38) 41%, transparent 56%);
   opacity: 0.28;
   transition: opacity 600ms ease;
 }
@@ -157,11 +158,11 @@ body.light .filament {
 
 .glow {
   position: absolute;
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(250, 204, 21, 0.16) 0%, rgba(250, 204, 21, 0.07) 35%, transparent 70%);
-  filter: blur(12px);
+  background: radial-gradient(circle, rgba(250, 204, 21, 0.18) 0%, rgba(250, 204, 21, 0.07) 35%, transparent 70%);
+  filter: blur(14px);
   opacity: 0;
   transition: opacity 750ms ease;
   pointer-events: none;

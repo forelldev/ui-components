@@ -1,35 +1,40 @@
 (() => {
   const body = document.body;
-  const chainPath = document.getElementById("chainPath");
-  const chainBall = document.getElementById("chainBall");
-  const chainCore = document.querySelector(".chain-ball-core");
+  const cordStrand = document.getElementById("cordStrand");
+  const cordKnot = document.getElementById("cordKnot");
 
-  const START_Y = 80;
-  const MAX_PULL = 130;
-  const THRESHOLD = 70;
+  const START_TOP = 70;
+  const MAX_PULL = 90;
+  const THRESHOLD = 55;
 
   let dragging = false;
   let startY = 0;
-  let startCy = START_Y;
+  let startTop = START_TOP;
 
-  const set = (y) => {
-    const cy = Math.max(START_Y, Math.min(START_Y + MAX_PULL, y));
-    const pull = cy - START_Y;
-    const sway = pull * 0.18;
-    const dip = pull * 0.22;
-    chainPath.setAttribute("d", `M 10 0 L 10 ${START_Y - sway} Q 10 ${START_Y} 10 ${START_Y + dip} L 10 ${cy}`);
-    chainBall.setAttribute("cy", cy);
-    if (chainCore) chainCore.setAttribute("cy", cy);
+  const apply = (top) => {
+    const t = Math.max(START_TOP, Math.min(START_TOP + MAX_PULL, top));
+    cordStrand.style.height = t + "px";
+    cordKnot.style.top = t + "px";
   };
 
-  chainBall.addEventListener("pointerdown", (e) => {
+  const reset = () => {
+    cordStrand.style.transition = "height 260ms cubic-bezier(0.25, 1, 0.5, 1)";
+    cordKnot.style.transition = "top 260ms cubic-bezier(0.25, 1, 0.5, 1)";
+    cordStrand.style.height = START_TOP + "px";
+    cordKnot.style.top = START_TOP + "px";
+    setTimeout(() => {
+      cordStrand.style.transition = "";
+      cordKnot.style.transition = "";
+    }, 280);
+  };
+
+  cordKnot.addEventListener("pointerdown", (e) => {
     dragging = true;
     startY = e.clientY;
-    startCy = parseFloat(chainBall.getAttribute("cy") || START_Y);
-    chainPath.style.transition = "none";
-    chainBall.style.transition = "none";
-    if (chainCore) chainCore.style.transition = "none";
-    chainBall.setPointerCapture(e.pointerId);
+    startTop = cordKnot.offsetTop || START_TOP;
+    cordStrand.style.transition = "none";
+    cordKnot.style.transition = "none";
+    cordKnot.setPointerCapture(e.pointerId);
     e.preventDefault();
     e.stopPropagation();
   });
@@ -37,49 +42,34 @@
   window.addEventListener("pointermove", (e) => {
     if (!dragging) return;
     const dy = e.clientY - startY;
-    set(startCy + dy);
+    apply(startTop + dy);
     e.preventDefault();
   });
 
   window.addEventListener("pointerup", (e) => {
     if (!dragging) return;
     dragging = false;
-    if (e.pointerId !== undefined && chainBall.hasPointerCapture && chainBall.hasPointerCapture(e.pointerId)) {
-      chainBall.releasePointerCapture(e.pointerId);
+    if (e.pointerId !== undefined && cordKnot.hasPointerCapture && cordKnot.hasPointerCapture(e.pointerId)) {
+      cordKnot.releasePointerCapture(e.pointerId);
     }
-    const cy = parseFloat(chainBall.getAttribute("cy") || START_Y);
-    if (cy - START_Y >= THRESHOLD) {
+    const pulled = (cordKnot.offsetTop || START_TOP) - START_TOP;
+    if (pulled >= THRESHOLD) {
       body.classList.toggle("light");
     }
-    chainPath.style.transition = "d 320ms cubic-bezier(0.22, 1, 0.36, 1)";
-    chainBall.style.transition = "cy 320ms cubic-bezier(0.22, 1, 0.36, 1)";
-    if (chainCore) chainCore.style.transition = "cy 320ms cubic-bezier(0.22, 1, 0.36, 1)";
-    set(START_Y);
-    setTimeout(() => {
-      chainPath.style.transition = "";
-      chainBall.style.transition = "";
-      if (chainCore) chainCore.style.transition = "";
-    }, 340);
+    reset();
     e.preventDefault();
   });
 
   window.addEventListener("pointercancel", (e) => {
     if (!dragging) return;
     dragging = false;
-    if (e.pointerId !== undefined && chainBall.hasPointerCapture && chainBall.hasPointerCapture(e.pointerId)) {
-      chainBall.releasePointerCapture(e.pointerId);
+    if (e.pointerId !== undefined && cordKnot.hasPointerCapture && cordKnot.hasPointerCapture(e.pointerId)) {
+      cordKnot.releasePointerCapture(e.pointerId);
     }
-    chainPath.style.transition = "d 320ms cubic-bezier(0.22, 1, 0.36, 1)";
-    chainBall.style.transition = "cy 320ms cubic-bezier(0.22, 1, 0.36, 1)";
-    if (chainCore) chainCore.style.transition = "cy 320ms cubic-bezier(0.22, 1, 0.36, 1)";
-    set(START_Y);
-    setTimeout(() => {
-      chainPath.style.transition = "";
-      chainBall.style.transition = "";
-      if (chainCore) chainCore.style.transition = "";
-    }, 340);
+    reset();
     e.preventDefault();
   });
 
-  set(START_Y);
+  cordStrand.style.height = START_TOP + "px";
+  cordKnot.style.top = START_TOP + "px";
 })();

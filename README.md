@@ -29,6 +29,8 @@ open gol-upload/index.html
 
 Interruptor tipo bombillo con cuerda (*pull-chain*). Al jalar la cuerda hacia abajo cambia automáticamente entre modo oscuro (negro) y modo claro (blanco), con movimiento natural de la cuerda.
 
+<img width="600" height="800" alt="bombillo" src="https://github.com/user-attachments/assets/ff14da03-d8f2-431e-ba30-0cf7dcb69011" />
+
 **Cómo usarlo:**
 
 ```bash
